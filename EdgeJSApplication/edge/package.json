@@ -1,0 +1,19 @@
+{
+  "name": "npm_script_runtime",
+  "version": "1.0.0",
+  "description": "edgejs",
+  "main": "edge.js",
+  "private": true,
+  "author": "RSA Archer",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.17.1",
+    "highcharts": "7.0.0",
+    "jsdom": "15.1.1",
+    "request": "2.88.0",
+    "vm2": "3.8.3",
+    "xml2js": "0.4.19",
+    "xmldom": "0.1.27",
+    "xpath": "0.0.27"
+  }
+}

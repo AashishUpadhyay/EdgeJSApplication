@@ -1,0 +1,5 @@
+packages/
+.vs/
+EdgeJSApplication/bin/
+EdgeJSApplication/obj/
+EdgeJSApplication/edge/node_modules/
