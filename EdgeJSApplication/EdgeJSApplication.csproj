@@ -83,6 +83,7 @@
     </Content>
     <EmbeddedResource Include="NodeScripts\SampleScript.js" />
     <EmbeddedResource Include="NodeScripts\SandboxedScript.js" />
+    <EmbeddedResource Include="NodeScripts\SandboxedScriptIPListing.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\EdgeJs.11.3.3\build\EdgeJs.targets" Condition="Exists('..\packages\EdgeJs.11.3.3\build\EdgeJs.targets')" />

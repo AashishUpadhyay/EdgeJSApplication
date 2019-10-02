@@ -8,7 +8,7 @@
         setTimeout: setTimeout,
         require: {
             external: {
-                modules:['request', 'xpath', 'xmldom', 'xml2js', 'express']
+                modules:['request', 'xpath', 'xmldom', 'xml2js']
             },
             builtin: false,
             context: 'host'
@@ -23,7 +23,7 @@
 
  
     var script = context.Script;
-    vm.run(script, context.AssemblyDirectory + '\\SampleScript.js');
+    vm.run(script, context.AssemblyDirectory + '\\edge\\SampleScript.js');
 
     process.on('uncaughtException',
         (err) => {

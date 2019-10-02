@@ -12,30 +12,53 @@ namespace EdgeJSApplication
 {
     class Program
     {
-        private const string SANDBOXED_SCRIPT_FILE = "EdgeJSApplication.NodeScripts.SandboxedScript.js";
+        private const string SWSANDBOXEDSCRIPTIPLISTING = "EdgeJSApplication.NodeScripts.SandboxedScriptIPListing.js";
+        private const string SANDBOXEDSCRIPT = "EdgeJSApplication.NodeScripts.SandboxedScript.js";
         private const string SAMPLE_SCRIPT = "EdgeJSApplication.NodeScripts.SampleScript.js";
 
         static void Main(string[] args)
         {
-            ////Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048 --inspect-brk");
+            try
+            {
+                //chrome://inspect/#devices
+                //Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048 --inspect-brk");
 
-            Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048");
+                Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048");
 
-            var sanboxedScript = GetScript(SANDBOXED_SCRIPT_FILE);
-            var script = GetScript(SAMPLE_SCRIPT);
+                var sanboxedScript = GetScript(SANDBOXEDSCRIPT);
+                var script = GetScript(SAMPLE_SCRIPT);
 
-            var func = Edge.Func(sanboxedScript);
+                var func = Edge.Func(sanboxedScript);
 
-            var context = new EdgeJSScriptExecutorContext(script);
-            var funcTask = func(context);
+                var executorSettings = new Dictionary<string, object>();
+                executorSettings.Add("Tokens", null);
 
-            dynamic scriptResult = funcTask.Result;
+                var funcTask = func(new
+                {
+                    Script = script,
+                    ScriptExecutionContext = new
+                    {
+                        Tokens = new
+                        {
+                            OutputFileName = "",
+                            IsOutgoingIpWhitelistEnabled = "true",
+                        }
+                    },
+                    AssemblyDirectory = GetAssemblyDirectory()
+                });
 
-            var json = JsonConvert.SerializeObject(scriptResult.output);
+                dynamic scriptResult = funcTask.Result;
 
-            Console.WriteLine(json);
+                var json = JsonConvert.SerializeObject(scriptResult.output);
 
-            Console.Read();
+                Console.WriteLine(json);
+
+                Console.Read();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private static string GetScript(string script)
@@ -54,54 +77,20 @@ namespace EdgeJSApplication
                 }
                 else
                 {
-                    throw new ArgumentNullException("Sandbox script.");
+                    throw new ArgumentNullException("Script not found!");
                 }
             }
 
             return sanboxedScript;
         }
-    }
 
-    public class EdgeJSScriptExecutorContext 
-    {
-        #region Private Fields
-
-        private string _assemblyDirectory;
-
-        #endregion
-
-        #region Constructor
-
-        public EdgeJSScriptExecutorContext(string script)
+        private static string GetAssemblyDirectory()
         {
-            Script = script;
-        }
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        /// Script that would get executed by NodeJS
-        /// </summary>
-        public string Script { get; }
-
-        public string AssemblyDirectory => _assemblyDirectory ?? (_assemblyDirectory = GetAssemblyDirectory());
-
-        #endregion
-
-        #region Private Methods
-
-        private string GetAssemblyDirectory()
-        {
-            string codeBase = typeof(EdgeJSScriptExecutorContext).Assembly.CodeBase;
+            string codeBase = typeof(Program).Assembly.CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);
             string path = Uri.UnescapeDataString(uri.Path);
             var assemblyDirectory = Path.GetDirectoryName(path);
-            return assemblyDirectory + "\\edge";
+            return assemblyDirectory;
         }
-
-        #endregion
     }
-
 }
