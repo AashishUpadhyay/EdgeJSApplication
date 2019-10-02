@@ -4,7 +4,7 @@
   "description": "edgejs",
   "main": "edge.js",
   "private": true,
-  "author": "RSA Archer",
+  "author": "",
   "license": "UNLICENSED",
   "dependencies": {
     "express": "^4.17.1",
