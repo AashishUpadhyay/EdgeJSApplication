@@ -1,4 +1,5 @@
 ﻿var func = function (context, postresult) {
+    debugger;
     const { NodeVM, VM, VMScript } = require('vm2');
 
     var scriptExecutionContext = context.ScriptExecutionContext;

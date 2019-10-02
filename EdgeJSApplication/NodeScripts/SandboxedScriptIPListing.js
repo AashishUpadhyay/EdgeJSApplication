@@ -1,7 +1,10 @@
 ﻿var func = function (context, postresult) {
     debugger;
     const { NodeVM, VM, VMScript } = require('vm2');
-
+    const extend = require('extend');
+    const dns = require('dns');
+    const url = require('url');
+    var whitelistedIps = ['140.82.118.5'];
     var scriptExecutionContext = context.ScriptExecutionContext;
 	
     var prepareRequire = function (){}
