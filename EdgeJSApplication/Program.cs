@@ -21,9 +21,9 @@ namespace EdgeJSApplication
             try
             {
                 //chrome://inspect/#devices
-                //Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048 --inspect-brk");
+                Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048 --inspect-brk");
 
-                Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048");
+                //Environment.SetEnvironmentVariable("EDGE_NODE_PARAMS", $"--max_old_space_size=2048");
 
                 var sanboxedScript = GetScript(SWSANDBOXEDSCRIPTIPLISTING);
                 var script = GetScript(SAMPLE_SCRIPT);

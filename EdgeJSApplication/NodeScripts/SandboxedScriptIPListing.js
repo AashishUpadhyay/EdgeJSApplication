@@ -4,13 +4,14 @@
     const extend = require('extend');
     const dns = require('dns');
     const url = require('url');
-    var whitelistedIps = ['140.82.118.5'];
+    var whitelistedIps = ['140.82.118.5','140.82.114.6','140.82.114.5'];
     var scriptExecutionContext = context.ScriptExecutionContext;
 	
     var prepareRequire = function (){}
     var modifiedRequire = function (module) {
         console.log(module);
         var preparedRequire = prepareRequire(module);
+        debugger;
         if (module === 'request') {
             return function request(uri, options, callback) {
                 var mergedInput = mergeInput(uri, options, callback);
